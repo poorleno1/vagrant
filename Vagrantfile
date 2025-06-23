@@ -290,6 +290,11 @@ Vagrant.configure("2") do |config|
 		  h.maxmemory = "8192"
 		  h.cpus = 2
 		end
+		vm01.vm.provision "shell", path: "azcli_install.bash", privileged: true
+		vm01.vm.provision "shell", path: "docker_install.bash", privileged: true
+		vm01.vm.provision "file", source: "docker-compose-local.yml", destination: "/home/vagrant/docker-compose-local.yml"
+		vm01.vm.provision "shell", path: "datahub_prereq.bash", privileged: true
+		vm01.vm.provision "shell", path: "datahub_install.bash", privileged: false
 		#vm01.vm.provision "shell", path: "LCM_Config.ps1", privileged: true
 	  	#vm01.vm.provision "shell", inline: "Install-Module xRobocopy,cChoco,ComputerManagementDsc,xPendingReboot,NetworkingDsc -Confirm:$false -Force;Set-Item -Path WSMan:\\localhost\\MaxEnvelopeSizeKb -Value 8192", privileged: true
 		#vm01.vm.provision "shell", path: "set-localDNSServer.ps1", privileged: true
